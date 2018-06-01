@@ -19,7 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.box_url = "http://cloud.terry.im/vagrant/oraclelinux-7-x86_64.box"
 
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", 3072] # RAM allocated to each VM
+    vb.customize ["modifyvm", :id, "--memory", 2048] # RAM allocated to each VM
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on" ]
   end
 
   config.vm.provision :shell, :path => "bootstrap.sh"
@@ -29,6 +30,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # c7401.vm.provision :shell, :path => "dev-bootstrap.sh"
     c7401.vm.hostname = "c7401.ambari.apache.org"
     c7401.vm.network :private_network, ip: "192.168.74.101"
+
+    config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", 3072]
+    end
+
   end
 
   config.vm.define :c7402 do |c7402|
@@ -76,6 +82,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     c7410.vm.network :private_network, ip: "192.168.74.110"
   end
 
+  config.vm.synced_folder "/Users/jhurley/Desktop", "/osx/Desktop"
+  config.vm.synced_folder "/Users/jhurley/dev/ambari/bin", "/osx/ambari-scripts"
+  config.vm.synced_folder "/Users/jhurley/src", "/osx/src"
+  config.vm.synced_folder "/private/ambari-server", "/private/ambari-server"
 
 
 

@@ -4,8 +4,6 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
-
-
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # Every Vagrant virtual environment requires a box to build off of.
@@ -21,7 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130427.box"
 
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", 3072] # RAM allocated to each VM
+    vb.customize ["modifyvm", :id, "--memory", 2048] # RAM allocated to each VM
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on" ]
   end
 
   config.vm.provision :shell, :path => "bootstrap.sh"
@@ -78,17 +77,51 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     c6410.vm.network :private_network, ip: "192.168.64.110"
   end
 
+  config.vm.define :oracle do |oracle|
+    oracle.vm.hostname = "oracle.ambari.apache.org"
+    oracle.vm.network :private_network, ip: "192.168.64.111"
 
+    config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", 1024]
+    end
+  end
 
+  config.vm.define :mysql do |mysql|
+    mysql.vm.hostname = "mysql.ambari.apache.org"
+    mysql.vm.network :private_network, ip: "192.168.64.112"
 
+    config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", 512]
+    end
+  end
 
+  config.vm.define :repo do |repo|
+    repo.vm.hostname = "repo.ambari.apache.org"
+    repo.vm.network :private_network, ip: "192.168.64.113"
 
+    config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", 512]
+    end
+  end
 
+  config.vm.define :dev do |dev|
+    dev.vm.hostname = "dev.ambari.apache.org"
+    dev.vm.network :private_network, ip: "192.168.64.114"
+  end
 
+  config.vm.define :ldap do |ldap|
+    ldap.vm.hostname = "ldap.ambari.apache.org"
+    ldap.vm.network :private_network, ip: "192.168.64.115"
 
+    config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", 512]
+    end
+  end
 
-
-
+  config.vm.synced_folder "/Users/jhurley/Desktop", "/osx/Desktop"
+  config.vm.synced_folder "/Users/jhurley/dev/ambari/bin", "/osx/ambari-scripts"
+  config.vm.synced_folder "/Users/jhurley/src", "/osx/src"
+  config.vm.synced_folder "/private/ambari-server", "/private/ambari-server"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -112,7 +145,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

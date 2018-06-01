@@ -110,6 +110,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder "/Users/jhurley/Desktop", "/osx/Desktop"
+  config.vm.synced_folder "/Users/jhurley/dev/ambari/bin", "/osx/ambari-scripts"
+  config.vm.synced_folder "/Users/jhurley/src", "/osx/src"
+  config.vm.synced_folder "/private/ambari-server", "/private/ambari-server"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
