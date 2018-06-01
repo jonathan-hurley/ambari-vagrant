@@ -10,3 +10,10 @@
 192.168.74.108 c7408.ambari.apache.org c7408
 192.168.74.109 c7409.ambari.apache.org c7409
 192.168.74.110 c7410.ambari.apache.org c7410
+
+192.168.64.111 oracle.ambari.apache.org oracle
+192.168.64.112 mysql.ambari.apache.org mysql
+192.168.64.113 repo.ambari.apache.org repository.ambari.apache.org repo repository
+172.22.71.94 release.eng.hortonworks.com
+
+192.168.64.1 hw10897 hw10897.local ix-hwx ix-hwx.local ix-hwx.ix
